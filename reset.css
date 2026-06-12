@@ -1,0 +1,117 @@
+body {
+    font-family: 'Courier New', monospace;
+    background: #888;
+    padding: 20px;
+}
+.game {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #bbb;
+    border: 3px solid black;
+}
+.header {
+    background: #000;
+    color: #0f0;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 2px solid white;
+}
+.header h1 {
+    font-size: 1.6rem;
+}
+.main {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: #aaa;
+}
+.tray, .fridge {
+    flex: 1;
+    background: #ccc;
+    border: 2px solid black;
+    padding: 12px;
+    min-height: 300px;
+}
+.tray h2, .fridge h2 {
+    background: black;
+    color: yellow;
+    padding: 4px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.word-list, .fridge-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 240px;
+}
+.magnet {
+    background: #ffffaa;
+    border: 2px solid black;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: grab;
+    font-size: 1.2rem;
+    font-family: monospace;
+    text-transform: uppercase;
+}
+.magnet:active {
+    cursor: grabbing;
+}
+/* fridge magnets also draggable, so they get same cursor */
+.fridge-words .magnet {
+    cursor: grab;
+    background: #ffffcc;
+}
+.fridge-words .magnet:active {
+    cursor: grabbing;
+}
+.drag-over {
+    background: #ffe0a3;
+    border: 2px dashed black;
+}
+.reactions {
+    background: #999;
+    border-top: 2px solid black;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.reaction-box {
+    background: #eee;
+    border: 2px solid black;
+    padding: 6px 12px;
+    flex: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: monospace;
+    font-weight: bold;
+}
+#familyIcon {
+    font-size: 2rem;
+    background: white;
+    border: 1px solid black;
+    padding: 4px;
+    width: 55px;
+    text-align: center;
+}
+#reactionText {
+    background: #ffffcc;
+    padding: 6px;
+    flex: 1;
+}
+button {
+    background: #ffcc00;
+    border: 2px solid black;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+button:active {
+    background: #dd9900;
+}
