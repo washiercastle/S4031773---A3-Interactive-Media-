@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MAGNET POETRY · FAMILY REACTIONS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="game-root">
+    <!-- WORLD VIEWPORT (draggable background) -->
+    <div class="viewport" id="viewport">
+        <div class="world" id="world">
+            <!-- CENTERED FRIDGE UI -->
+            <div class="fridge-ui" id="fridgeUI">
+                <div class="submission-frame" id="fridgeDropZone">
+                    <p>Drop words from the outside here</p>
+                    <div id="fridgeWords" class="fridge-words"></div>
+                </div>
+                <div class="reaction-mini" id="fridgeReaction">
+                    <span id="familyIconFridge">👤</span>
+                    <span id="reactionTextFridge">drop word here</span>
+                </div>
+            </div>
+
+            <!-- INVENTORY / HIGHCHAIR (image background) -->
+            <div class="inventory-nav" id="inventoryUI">
+                <div id="inventoryItems" class="inventory-items"></div>
+            </div>
+
+            <!-- INTERACTIVE OBJECTS (cereal & newspaper) — NOW INSIDE WORLD -->
+            <img src="pngs/cereal.png" id="cerealBox" class="interactive-object cereal-box" alt="Cereal Box">
+            <img src="pngs/newspaper.png" id="newspaper" class="interactive-object newspaper" alt="Newspaper">
+        </div> <!-- end world -->
+    </div> <!-- end viewport -->
+
+    <!-- RESET BUTTON -->
+    <button id="resetBtn" class="reset-btn">⟳ RESET GAME</button>
+
+    <!-- POPUP -->
+    <div id="popupOverlay" class="popup-overlay" style="display:none;">
+        <div class="popup-container">
+            <button id="popupCloseBtn" class="popup-close">✕</button>
+            <div id="popupGrid" class="popup-grid"></div>
+        </div>
+    </div>
+
+    <!-- FAMILY REACTION SPRITE (slides in from left) -->
+    <div id="reactionSpriteContainer" class="reaction-sprite-container">
+        <img id="reactionSprite" src="" alt="Family member" class="reaction-sprite">
+    </div>
+    <div id="reactionBubble" class="reaction-bubble-mini">
+        <span class="reaction-text-mini" id="reactionSpriteText">...</span>
+    </div>
+
+    <!-- ENDING OVERLAY -->
+    <div id="endingOverlay" class="ending-overlay">
+        <div id="endingText" class="ending-text"></div>
+        <button id="endingResetBtn">PLAY AGAIN</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

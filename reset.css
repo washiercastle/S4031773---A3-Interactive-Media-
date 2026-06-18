@@ -1,14 +1,50 @@
+/*
+    SIMPLIFIED MAGNET GAME PROTOTYPE
+    This is the original prototype styling that I kept as a 
+    fallback. It uses a boxed layout instead of the full-screen 
+    pannable world. I decided to keep it because sometimes I need 
+    to test drag-and-drop mechanics without the panning system 
+    getting in the way.
+    The colours and fonts match the main game, but the layout is
+    simpler – just a tray, a fridge, and a reaction box.
+*/
+
+* {
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Courier New', monospace;
-    background: #888;
+    background: #2b2b2b;
     padding: 20px;
+    /* 
+        I used flexbox here instead of positioning everything absolutely 
+        because this version is meant to be quick and reliable for testing.
+        The main game uses absolute positioning for the pannable world,
+        but this simpler version is easier to debug.
+    */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
+
 .game {
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
     background: #bbb;
     border: 3px solid black;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
 }
+
+/* 
+    Header – I kept the same yellow-on-black style from the main game
+    so it feels consistent even in this simplified version.
+*/
 .header {
     background: #000;
     color: #0f0;
@@ -19,12 +55,19 @@ body {
 .header h1 {
     font-size: 1.6rem;
 }
+
+/* 
+    Main area – flexbox layout so the tray and fridge sit side by side.
+    In the main game, these are absolutely positioned inside the world,
+    but here they're just normal flex items.
+*/
 .main {
     display: flex;
     gap: 12px;
     padding: 16px;
     background: #aaa;
 }
+
 .tray, .fridge {
     flex: 1;
     background: #ccc;
@@ -32,6 +75,7 @@ body {
     padding: 12px;
     min-height: 300px;
 }
+
 .tray h2, .fridge h2 {
     background: black;
     color: yellow;
@@ -40,14 +84,25 @@ body {
     text-align: center;
     font-size: 1.2rem;
 }
+
+/* 
+    Word containers – I use flex-wrap here so words naturally wrap
+    to the next line instead of overflowing.
+*/
 .word-list, .fridge-words {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     min-height: 240px;
 }
+
+/* 
+    Magnet styling – I kept the yellow "sticky note" look because
+    playtesters said it felt most like real fridge magnets.
+    The shadow gives them a slight 3D effect.
+*/
 .magnet {
-    background: #ffffaa;
+    background: #ffffcc;
     border: 2px solid black;
     padding: 6px 12px;
     font-weight: bold;
@@ -55,22 +110,35 @@ body {
     font-size: 1.2rem;
     font-family: monospace;
     text-transform: uppercase;
+    box-shadow: 2px 2px 0 #666;
+    transition: transform 0.08s;
+}
+.magnet:hover {
+    transform: scale(1.02);
 }
 .magnet:active {
     cursor: grabbing;
 }
-/* fridge magnets also draggable, so they get same cursor */
-.fridge-words .magnet {
-    cursor: grab;
-    background: #ffffcc;
+
+.fridge-words {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 120px;          
 }
 .fridge-words .magnet:active {
     cursor: grabbing;
 }
+
 .drag-over {
     background: #ffe0a3;
     border: 2px dashed black;
 }
+
+/* 
+    Reaction panel – sits at the bottom of the game container.
+    I kept the same grey background and yellow bubble style as the main game.
+*/
 .reactions {
     background: #999;
     border-top: 2px solid black;
@@ -80,6 +148,7 @@ body {
     align-items: center;
     gap: 10px;
 }
+
 .reaction-box {
     background: #eee;
     border: 2px solid black;
@@ -91,6 +160,7 @@ body {
     font-family: monospace;
     font-weight: bold;
 }
+
 #familyIcon {
     font-size: 2rem;
     background: white;
@@ -99,11 +169,17 @@ body {
     width: 55px;
     text-align: center;
 }
+
 #reactionText {
     background: #ffffcc;
     padding: 6px;
     flex: 1;
 }
+
+/* 
+    Buttons – I used the same yellow colour as the main game.
+    The active state darkens the button so it feels like a physical press.
+*/
 button {
     background: #ffcc00;
     border: 2px solid black;
@@ -114,4 +190,18 @@ button {
 }
 button:active {
     background: #dd9900;
+}
+
+/*
+    
+    If the screen is small, switch to a vertical layout so the
+    tray and fridge stack on top of each other.
+*/
+@media (max-width: 700px) {
+    .main {
+        flex-direction: column;
+    }
+    .tray, .fridge {
+        min-height: 200px;
+    }
 }
