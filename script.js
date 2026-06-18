@@ -1,5 +1,5 @@
 //config stuff for easy of testing/tweaking without digging through code.
-const CUTSCENE_ENABLED = false;
+const CUTSCENE_ENABLED = true;
 
 // how many copies of filler words to include in the inventory – more copies means more likely to build sentences, which means more reactions, but also more clutter
 const FILLER_COPIES = 3;
@@ -768,37 +768,55 @@ inventoryContainer.addEventListener('dragenter', addBlur);
 inventoryContainer.addEventListener('dragleave', removeBlur);
 
 // BEGINNING CUTSCENE ----------------------------
+// I wanted the intro to feel interactive and since the whole game is built around dragging (magnets, panning the world), it made sense to use dragging for the cutscene too. This way, the player's very first interaction with the game is the same gesture they'll use throughout. Also, I thought it was a cool way to "pull back the curtain" on the game world.
 const cutscene = document.getElementById('cutscene');
+
 if (CUTSCENE_ENABLED && cutscene) {
     let dragActive = false, startY = 0, currentY = 0;
+    
+    // When the user presses down on the black screen, start tracking the drag
     cutscene.addEventListener('mousedown', (e) => {
+        // If the cutscene is already dismissed, ignore further input
         if (cutscene.classList.contains('dismiss')) return;
         e.preventDefault();
         dragActive = true;
-        startY = e.clientY;
+        startY = e.clientY; // Record where the mouse started
         currentY = 0;
+        // Remove any transition during the drag so it follows the mouse 1:1
         cutscene.style.transition = 'none';
         cutscene.style.transform = 'translateY(0px)';
     });
+
+    // While the mouse moves and the user is dragging, update the position
     window.addEventListener('mousemove', (e) => {
         if (!dragActive) return;
+        // deltaY is negative when dragging up, positive when dragging down
         let delta = e.clientY - startY;
+        // Limit how far up you can drag (max 400px) so it doesn't fly off-screen
         let newY = Math.min(0, Math.max(-400, delta));
         currentY = newY;
         cutscene.style.transform = `translateY(${newY}px)`;
     });
+
+    // When the user releases the mouse, decide what to do
     window.addEventListener('mouseup', () => {
         if (!dragActive) return;
         dragActive = false;
+        // Add a smooth snap-back or dismiss transition
         cutscene.style.transition = 'transform 0.2s ease-out';
+        
+        // If dragged up past 150px, dismiss the cutscene (slide it off the screen)
         if (currentY < -150) {
             cutscene.classList.add('dismiss');
             cutscene.style.transform = 'translateY(-100%)';
+            // After the animation completes, hide it completely so clicks pass through
             cutscene.addEventListener('transitionend', () => {
                 cutscene.style.display = 'none';
             }, { once: true });
         } else {
+            // Otherwise snap back to the bottom (fully visible)
             cutscene.style.transform = 'translateY(0px)';
+            // Remove the transition after snapping to avoid conflicts with future drags
             setTimeout(() => {
                 if (!dragActive) cutscene.style.transition = '';
             }, 250);
@@ -806,6 +824,7 @@ if (CUTSCENE_ENABLED && cutscene) {
         currentY = 0;
     });
 } else if (cutscene) {
+    // If cutscene is disabled, hide it immediately
     cutscene.style.display = 'none';
 }
 
@@ -826,3 +845,6 @@ endingResetBtn.addEventListener('click', resetGame);
 
 //START ----------------
 resetGame();
+
+
+//Looking back over the last few weeks of development, I'm actually pretty proud of what this project became. There were countless roundabouts where I chased down bugs that turned out to be simple typos, and I definitely took the long way around on some scripts that could have been cleaner – the drag-and-drop system alone went through about four different iterations before it felt right. But in the end, it achieved most of what I originally envisioned: a world you can pan around, magnets you can drag and place freely, family reactions that respond to what you build, and even extra touches like the cutscenes that I didn't initially plan for. I wanted the core interaction to feel tactile and responsive, and I think the dragging mechanic – across the magnets, the panning, and even the intro cutscene – ties everything together in a way that feels cohesive, even if the code underneath isn't the most optimized. If I had more time, I would have loved to flesh out the gameplay loop more – maybe add some sort of narrative progression or make the family reactions escalate based on the sentences you build. And honestly, I would have liked to implement a paper-ripping simulation for the popup words, so they feel like they're literally being torn out of the cereal box or newspaper. But for a project that started as a simple fridge magnet concept, I think it evolved into something interesting and playful.
